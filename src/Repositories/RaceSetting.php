@@ -1,6 +1,7 @@
 <?php
 
 require_once('src/Inputs/Setting.php');
+require_once('src/Repositories/Vehicles.php');
 
 class RaceSetting extends Setting
 {
@@ -16,15 +17,17 @@ class RaceSetting extends Setting
 
     public function __construct()
     {
-        $this->vehicles = array();
-        $this->vehicles[0] = array('Car', 150, 'Km/h');
-        $this->vehicles[1] = array('Motor', 200, 'Km/h');
+        // load race vehicles
+        $vehicles = new Vehicles();
+        $this->vehicles = $vehicles->vehicles;
 
-        $this->vehiclesMenu = array(
-            0 => $this->vehicles[0][0],
-            1 => $this->vehicles[1][0],
-        );
+        // create vehicle selection menu
+        $this->vehiclesMenu = array();
+        foreach ($this->vehicles as $key => $vehicle) {
+            $this->vehiclesMenu[$key] = $this->vehicles[$key]['name'];
+        }
 
+        // setup race setting from user inputs
         $this->location = $this->getLocation();
         $this->distance = $this->getDistance();
         $this->first_player = $this->getFirstPlayer();
@@ -55,13 +58,14 @@ class RaceSetting extends Setting
 
     private function getFirstPlayerVehicle(): array
     {
-        $vehicle_id = $this->getItemFromMenu($this->vehiclesMenu, 'Choose the first player vehicle');
-        return $this->vehicles[$vehicle_id];
+        $index = $this->getItemFromMenu($this->vehiclesMenu, 'Choose the first player vehicle');
+        unset($this->vehiclesMenu[$index]);
+        return $this->vehicles[$index];
     }
 
     private function getSecondPlayerVehicle(): array
     {
-        $vehicle_id = $this->getItemFromMenu($this->vehiclesMenu, 'Choose the second player vehicle');
-        return $this->vehicles[$vehicle_id];
+        $index = $this->getItemFromMenu($this->vehiclesMenu, 'Choose the second player vehicle');
+        return $this->vehicles[$index];
     }
 }
