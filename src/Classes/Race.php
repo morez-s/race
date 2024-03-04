@@ -29,7 +29,7 @@ class Race
         \cli\out("\t\t");
         \cli\out("Player Two: " . $this->setting->second_player . " (" . $this->setting->second_player_vehicle['name'] . ")\n");
         \cli\out("\nLocation: " . $this->setting->location . "\t\tDistance: " . $this->setting->distance . " meters\n\n");
-        test_notify(new \cli\progress\Bar("Race is going on :-)", 100), 100, 10000);
+        test_notify(new \cli\progress\Bar("Race is going on :-)", 100), 100, 100000);
         \cli\out("\n#####  Race Finished  #####\n");
     }
 
@@ -44,7 +44,9 @@ class Race
         \cli\out("\n Time taken by " . $this->setting->second_player . " to reach the finish line:\t" . number_format((float)$winnerResult[1], 2, '.', '') . " seconds\n");
         $winnerMessage = $this->getWinnerMessage($winnerResult[2]);
         \cli\out("\n\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+        \cli\Colors::enable();
         \cli\out("\n\n" . $winnerMessage . "\n\n");
+        \cli\Colors::disable();
         \cli\out("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n");
     }
 
@@ -56,11 +58,11 @@ class Race
                 break;
             
             case 'first':
-                $winnerMessage = $this->setting->first_player . ' WON THE GAME!';
+                $winnerMessage = '%k%2' . $this->setting->first_player . '%n WON THE GAME!';
                 break;
             
             case 'second':
-                $winnerMessage = $this->setting->second_player . ' WON THE GAME!';
+                $winnerMessage = '%k%2' . $this->setting->second_player . '%n WON THE GAME!';
                 break;
             
             default:
