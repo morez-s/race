@@ -10,6 +10,6 @@ echo "========   Welcome To The Biggest Auto Race In World!   ========\n";
 echo "================================================================\n";
 echo "\n\n";
 
-// set up a new race
+// start a new race
 $race = new Race();
-echo json_encode($race->setup());
+$race->start();
