@@ -81,7 +81,6 @@ class RaceSetting extends Setting
     private function getFirstPlayerVehicle(): array
     {
         $index = $this->getItemFromMenu($this->vehiclesMenu, 'Choose the first player vehicle');
-        unset($this->vehiclesMenu[$index]);
         return $this->vehicles[$index];
     }
 
