@@ -6,6 +6,7 @@ require_once('src/Repositories/Vehicles.php');
 class RaceSetting extends Setting
 {
     private array $vehicles;
+    private array $vehiclesArray;
     private array $vehiclesMenu;
     
     public string $location;
@@ -21,6 +22,13 @@ class RaceSetting extends Setting
         $vehicles = new Vehicles();
         $this->vehicles = $vehicles->vehicles;
 
+        // craete vehicles array to show in a table
+        $res = array();
+        foreach ($this->vehicles as $vehicle) {
+            array_push($res, array($vehicle['name'], $vehicle['maxSpeed'], $vehicle['unit']));
+        }
+        $this->vehiclesArray = $res;
+
         // create vehicle selection menu
         $this->vehiclesMenu = array();
         foreach ($this->vehicles as $key => $vehicle) {
@@ -32,6 +40,7 @@ class RaceSetting extends Setting
         $this->distance = $this->getDistance();
         $this->first_player = $this->getFirstPlayer();
         $this->second_player = $this->getSecondPlayer();
+        $this->showVehiclesTable();
         $this->first_player_vehicle = $this->getFirstPlayerVehicle();
         $this->second_player_vehicle = $this->getSecondPlayerVehicle();
     }
@@ -54,6 +63,19 @@ class RaceSetting extends Setting
     private function getSecondPlayer(): string
     {
         return $this->getStringInput('name of second player');
+    }
+
+    private function showVehiclesTable()
+    {
+        \cli\out("\nHere is a list of all available vehicles to choose:\n");
+
+        $headers = array('Name', 'Max Speed', 'Unit');
+
+        $table = new \cli\Table();
+        $table->setHeaders($headers);
+        $table->setRows($this->vehiclesArray);
+        $table->setRenderer(new \cli\table\Ascii([20, 10, 10]));
+        $table->display();
     }
 
     private function getFirstPlayerVehicle(): array
