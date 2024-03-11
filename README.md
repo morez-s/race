@@ -10,3 +10,9 @@ Run The Game
 
 To start a new game, please run the command below in the current directory:
 `php bin/race.php`
+
+My Personal Resume
+------------
+
+English version: https://github.com/morez-s/race/docs/CV/CV-Mohammadreza-Sahelgozin-1-Mar-2024.pdf <br />
+Persian version: https://github.com/morez-s/race/docs/CV/CV-Mohammadreza-Sahelgozin-Persian-1402.11.01.pdf
